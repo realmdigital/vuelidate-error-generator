@@ -18,7 +18,7 @@ Vue.use(VuelidateErrorGenerator)
 ```
 
 ## Description
-Vuelidate Error Generator is a lightweight configurable error message generator for (Vuelidate)[https://vuelidate.js.org/]
+Vuelidate Error Generator is a lightweight configurable error message generator for [Vuelidate](https://vuelidate.js.org/)
 
 ## Usage
 To set up local error messages.
