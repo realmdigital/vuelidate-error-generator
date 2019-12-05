@@ -11,7 +11,7 @@ yarn add vuelidate-error-generator
 ```
 
 ```javascript
-import VuelidateErrorGenerator from `vuelidate-error-generator`
+import VuelidateErrorGenerator from 'vuelidate-error-generator'
 import Vue from 'vue'
 
 Vue.use(VuelidateErrorGenerator)
