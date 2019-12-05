@@ -1,8 +1,8 @@
 {
     "name": "vuelidate-error-generator",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Error generator plugin to be used with vuelidate",
-    "main": "index.js",
+    "main": "src/index.js",
     "author": "Realm Digital",
     "license": "MIT",
     "repository": {

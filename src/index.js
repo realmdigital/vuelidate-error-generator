@@ -20,7 +20,11 @@ const VuelidateErrorGenerator = {
             },
             computed: {
                 mergedMessageFunctions() {
-                    return Object.assign({}, mergedDefaultMessageFunctions, this.$options.localMessages.default)
+                    return Object.assign(
+                        {},
+                        mergedDefaultMessageFunctions,
+                        this.$options.defaultMessageFunctions.default,
+                    )
                 },
             },
             methods: {
@@ -50,6 +54,8 @@ const VuelidateErrorGenerator = {
         })
     },
 }
+
+export default VuelidateErrorGenerator
 
 const getErrorMessage = (validationType, attributes, messageFunctions) => {
     const messageFunc = messageFunctions[validationType]
