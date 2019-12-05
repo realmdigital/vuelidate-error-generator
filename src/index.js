@@ -15,16 +15,12 @@ const VuelidateErrorGenerator = {
             defaultMessageFunctions,
         )
         Vue.mixin({
-            localMessages: {
+            localMessageFunctions: {
                 default: {},
             },
             computed: {
                 mergedMessageFunctions() {
-                    return Object.assign(
-                        {},
-                        mergedDefaultMessageFunctions,
-                        this.$options.defaultMessageFunctions.default,
-                    )
+                    return Object.assign({}, mergedDefaultMessageFunctions, this.$options.localMessageFunctions.default)
                 },
             },
             methods: {
@@ -35,7 +31,7 @@ const VuelidateErrorGenerator = {
                     const mergedFieldMessageFunctions = Object.assign(
                         {},
                         this.mergedMessageFunctions,
-                        this.$options.localMessages[field],
+                        this.$options.localMessageFunctions[field],
                     )
 
                     attributes.name = attributes.name ? attributes.name : field
