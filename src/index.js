@@ -25,13 +25,14 @@ const VuelidateErrorGenerator = {
             },
             methods: {
                 getErrorMessages(field, attributes) {
-                    const fieldValidation = this.$v[field]
+                    attributes = attributes || {}
+                    const fieldValidation = getNestedProperty(this.$v, field)
                     const validationTypes = Object.keys(fieldValidation.$params)
 
                     const mergedFieldMessageFunctions = Object.assign(
                         {},
                         this.mergedMessageFunctions,
-                        this.$options.localMessageFunctions[field],
+                        getNestedProperty(this.$options.localMessageFunctions, field),
                     )
 
                     attributes.name = attributes.name ? attributes.name : field
@@ -39,9 +40,14 @@ const VuelidateErrorGenerator = {
                     if (fieldValidation.$error) {
                         return validationTypes
                             .filter(validationType => !fieldValidation[validationType])
-                            .map(validationType =>
-                                getErrorMessage(validationType, attributes, mergedFieldMessageFunctions),
-                            )
+                            .map(validationType => {
+                                const params = fieldValidation.$params[validationType] || {}
+                                return getErrorMessage(
+                                    validationType,
+                                    { ...attributes, ...params },
+                                    mergedFieldMessageFunctions,
+                                )
+                            })
                     } else {
                         return []
                     }
@@ -53,12 +59,16 @@ const VuelidateErrorGenerator = {
 
 export default VuelidateErrorGenerator
 
+const getNestedProperty = (base, path) => {
+    return path.split('.').reduce((agg, property) => agg[property], base)
+}
+
 const getErrorMessage = (validationType, attributes, messageFunctions) => {
     const messageFunc = messageFunctions[validationType]
     if (messageFunc) {
         return messageFunc(attributes)
     } else {
-        return messageFunc.default(attributes)
+        return messageFunctions.default(attributes)
     }
 }
 
